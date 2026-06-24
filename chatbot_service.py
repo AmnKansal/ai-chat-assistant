@@ -14,7 +14,7 @@ prompt = ChatPromptTemplate.from_messages([
 chat_bot = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7, api_key=llm_key)
 print("Chatbot is active. Please type exit to quit...")
 
-def enable_chatbot(user_input: str) -> str:
+def get_response(user_input: str) -> str:
     try:
         formatted_prompt = prompt.format_messages(user_input=user_input)
         response = chat_bot.invoke(formatted_prompt)

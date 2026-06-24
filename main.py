@@ -1,13 +1,18 @@
 from fastapi import FastAPI,status
-from chatbot_service import enable_chatbot
+from chatbot_service import get_response
+from schemas.request import RequestChatBotQuery
+from schemas.response import APIResponse
 
 app = FastAPI()
 
 @app.get("/welcome",status_code=status.HTTP_200_OK)
 def welcome_user() -> dict :
-    return {"message":"welcome to my ai chatbot assistant"}
+    return APIResponse.success(data="Welcome to AI Chatbot!")
 
-@app.post("/enablechatbot")
-def get_enable_chatbot(query:str) -> dict :
-    response = enable_chatbot(query)
-    return {"data":response}
+@app.post("/chat", status_code=status.HTTP_200_OK)
+def get_chat_response(request: RequestChatBotQuery):
+    try:
+        response = get_response(request.query)
+        return APIResponse.success(data=response)
+    except Exception as e:
+        return APIResponse.error(message=str(e))
