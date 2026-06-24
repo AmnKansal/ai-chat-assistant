@@ -10,3 +10,4 @@ wheels/
 .venv
 
 # Secret-file never upload
+.env
